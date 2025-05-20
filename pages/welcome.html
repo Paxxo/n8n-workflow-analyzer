@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a n8n AI Assistant Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --secondary-color: #34495e;
+            --background-color: #f9f9f9;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --success-color: #27ae60;
+            --warning-color: #e67e22;
+            --danger-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            background-color: var(--light-color);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        section {
+            margin: 4rem 0;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .steps {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .cta {
+            text-align: center;
+            background-color: var(--light-color);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-radius: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--dark-color);
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .faq {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 1rem;
+            background-color: var(--light-color);
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: none;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        .integrations {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .integration-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            width: 230px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .integration-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .integration-logo {
+            max-width: 80px;
+            max-height: 80px;
+            margin: 0 auto 1rem;
+        }
+        
+        .integration-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .testimonials {
+            background-color: var(--light-color);
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+        
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .testimonial {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+        
+        .testimonial-info h4 {
+            margin: 0;
+            color: var(--secondary-color);
+        }
+        
+        .testimonial-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .version-info {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .step {
+                flex-direction: column;
+            }
+            
+            .step-number {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="version-info">
+        n8n AI Assistant Pro - Versión 2.0.0
+    </div>
+    
+    <header>
+        <div class="container">
+            <h1>n8n AI Assistant Pro</h1>
+            <p>Tu asistente de IA completo para crear, analizar y optimizar workflows en n8n</p>
+        </div>
+    </header>
+    
+    <section class="container">
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3>Generación de workflows</h3>
+                <p>Describe lo que necesitas en lenguaje natural y el asistente generará automáticamente workflows completos con múltiples nodos y sus conexiones apropiadas.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Análisis inteligente</h3>
+                <p>Analiza tus workflows existentes para detectar problemas de rendimiento, seguridad y estructura, y recibe sugerencias de mejora personalizadas.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3>Gestión de Docker y PostgreSQL</h3>
+                <p>Controla tus contenedores Docker y bases de datos PostgreSQL directamente desde la extensión utilizando comandos en lenguaje natural.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Chat interactivo</h3>
+                <p>Consulta cualquier duda sobre n8n en un chat conversacional integrado, con respuestas específicas y contextuales para tus workflows.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>Múltiples modelos de IA</h3>
+                <p>Compatible con OpenAI, Claude, OpenRouter y APIs personalizadas, para que puedas elegir el modelo que mejor se adapte a tus necesidades y presupuesto.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Aplicación automática de cambios</h3>
+                <p>Aplica las sugerencias de optimización directamente en tu workflow con un solo clic, sin necesidad de modificar manualmente el código.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="container">
+        <h2>Cómo empezar</h2>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Configura tu API de IA</h3>
+                    <p>Haz clic en la pestaña de "Config" y configura tu API key preferida para OpenAI, Claude o cualquier otra alternativa compatible. Tu API key se almacena solo localmente en tu navegador para mayor seguridad.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Abre tu editor de n8n</h3>
+                    <p>Navega a tu instancia de n8n (ya sea local o en la nube) y abre el editor de workflows. El asistente detectará automáticamente que estás en n8n y te permitirá interactuar con tu workflow.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Interactúa con el asistente</h3>
+                    <p>Puedes chatear directamente para hacer preguntas, generar nuevos workflows, analizar uno existente o gestionar tus contenedores Docker y PostgreSQL con lenguaje natural.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Aplica las sugerencias</h3>
+                    <p>Cuando recibas sugerencias de mejora, simplemente haz clic en "Aplicar Sugerencias" para implementar automáticamente los cambios en tu workflow, ahorrando tiempo y esfuerzo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="container">
+        <h2>Integraciones</h2>
+        
+        <div class="integrations">
+            <div class="integration-card">
+                <img src="../images/openai-logo.png" alt="OpenAI" class="integration-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%233498db%22 /><text x=%2240%22 y=%2245%22 font-family=%22Arial%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22white%22>OpenAI</text></svg>'">
+                <h3>OpenAI</h3>
+                <p>Utiliza GPT-4o, GPT-4 Turbo y otros modelos de OpenAI para generar y analizar workflows.</p>
+            </div>
+            
+            <div class="integration-card">
+                <img src="../images/anthropic-logo.png" alt="Anthropic" class="integration-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%233498db%22 /><text x=%2240%22 y=%2245%22 font-family=%22Arial%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22white%22>Anthropic</text></svg>'">
+                <h3>Anthropic</h3>
+                <p>Conecta con Claude 3.5 Sonnet, Claude 3 Opus y otros modelos para potentes análisis.</p>
+            </div>
+            
+            <div class="integration-card">
+                <img src="../images/docker-logo.png" alt="Docker" class="integration-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%233498db%22 /><text x=%2240%22 y=%2245%22 font-family=%22Arial%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22white%22>Docker</text></svg>'">
+                <h3>Docker</h3>
+                <p>Gestiona tus contenedores Docker con comandos en lenguaje natural para control total.</p>
+            </div>
+            
+            <div class="integration-card">
+                <img src="../images/postgres-logo.png" alt="PostgreSQL" class="integration-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%233498db%22 /><text x=%2240%22 y=%2245%22 font-family=%22Arial%22 font-size=%2212%22 text-anchor=%22middle%22 fill=%22white%22>PostgreSQL</text></svg>'">
+                <h3>PostgreSQL</h3>
+                <p>Interactúa con tus bases de datos PostgreSQL para consultas, modificaciones y optimizaciones.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="container">
+        <h2>Capturas de pantalla</h2>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="../images/screenshot-chat.png" alt="Interfaz de chat del asistente" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect width=%22300%22 height=%22200%22 fill=%22%23ecf0f1%22 /><text x=%22150%22 y=%22100%22 font-family=%22Arial%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22%2334495e%22>Chat de Asistente</text></svg>'">
+            </div>
+            <div class="gallery-item">
+                <img src="../images/screenshot-generate.png" alt="Generación de workflows" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect width=%22300%22 height=%22200%22 fill=%22%23ecf0f1%22 /><text x=%22150%22 y=%22100%22 font-family=%22Arial%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22%2334495e%22>Generación de Workflows</text></svg>'">
+            </div>
+            <div class="gallery-item">
+                <img src="../images/screenshot-analyze.png" alt="Análisis de workflows" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect width=%22300%22 height=%22200%22 fill=%22%23ecf0f1%22 /><text x=%22150%22 y=%22100%22 font-family=%22Arial%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22%2334495e%22>Análisis de Workflows</text></svg>'">
+            </div>
+            <div class="gallery-item">
+                <img src="../images/screenshot-docker.png" alt="Gestión de Docker y PostgreSQL" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect width=%22300%22 height=%22200%22 fill=%22%23ecf0f1%22 /><text x=%22150%22 y=%22100%22 font-family=%22Arial%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22%2334495e%22>Docker y PostgreSQL</text></svg>'">
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials">
+        <div class="container">
+            <h2>Lo que dicen nuestros usuarios</h2>
+            
+            <div class="testimonial-container">
+                <div class="testimonial">
+                    <p class="testimonial-text">"Esta extensión ha revolucionado mi forma de trabajar con n8n. Genero workflows complejos en cuestión de minutos y el análisis automático me ha ayudado a optimizar mis automatizaciones existentes."</p>
+                    <div class="testimonial-author">
+                        <img src="../images/avatar1.png" alt="Avatar" class="testimonial-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><circle cx=%2225%22 cy=%2225%22 r=%2225%22 fill=%22%233498db%22 /><text x=%2225%22 y=%2230%22 font-family=%22Arial%22 font-size=%2220%22 text-anchor=%22middle%22 fill=%22white%22>M</text></svg>'">
+                        <div class="testimonial-info">
+                            <h4>Miguel Pérez</h4>
+                            <p>Desarrollador de Automatizaciones</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-text">"La capacidad de gestionar mis contenedores Docker y bases de datos PostgreSQL directamente desde la extensión es increíble. Ha simplificado enormemente mi flujo de trabajo y me ha ahorrado mucho tiempo."</p>
+                    <div class="testimonial-author">
+                        <img src="../images/avatar2.png" alt="Avatar" class="testimonial-avatar" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2250%22 height=%2250%22><circle cx=%2225%22 cy=%2225%22 r=%2225%22 fill=%22%233498db%22 /><text x=%2225%22 y=%2230%22 font-family=%22Arial%22 font-size=%2220%22 text-anchor=%22middle%22 fill=%22white%22>L</text></svg>'">
+                        <div class="testimonial-info">
+                            <h4>Laura Martínez</h4>
+                            <p>DevOps Engineer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="container">
+        <h2>Preguntas frecuentes</h2>
+        
+        <div class="faq">
+            <div class="faq-item">
+                <div class="faq-question">
+                    ¿Qué modelos de IA puedo utilizar? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>El asistente es compatible con varios modelos de IA, incluyendo:</p>
+                    <ul>
+                        <li>OpenAI: GPT-4o, GPT-4 Turbo, GPT-3.5 Turbo</li>
+                        <li>Anthropic: Claude 3.5 Sonnet, Claude 3 Opus, Claude 3 Haiku</li>
+                        <li>OpenRouter: Acceso a múltiples modelos incluyendo Mistral, Claude y más</li>
+                        <li>API personalizada: Integra tu propio endpoint de modelo de IA</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    ¿Dónde se almacenan mis API keys? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Todas las API keys y preferencias se almacenan localmente en tu navegador Chrome, utilizando el almacenamiento local de Chrome (localStorage). No se envían a ningún servidor externo y solo tú tienes acceso a ellas.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    ¿Cómo se conecta con Docker y PostgreSQL? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>La extensión se comunica con un pequeño backend Flask que se ejecuta en tu máquina local. Este backend interactúa con Docker a través de la API de Docker y con PostgreSQL utilizando la biblioteca psycopg2. Puedes configurar las conexiones en la pestaña "Docker/DB" de la extensión.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    ¿Funciona con todas las versiones de n8n? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>La extensión está diseñada para ser compatible con las versiones recientes de n8n, tanto en la nube como en instalaciones locales. Se ha probado con n8n versión 0.214 y posteriores. Sin embargo, algunas funcionalidades avanzadas como la aplicación automática de cambios pueden variar ligeramente en diferentes versiones.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    ¿Puedo usar la extensión sin conexión a internet? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>La funcionalidad principal de la extensión depende de la conexión a servicios de IA como OpenAI o Claude, por lo que se requiere conexión a internet para estas características. Sin embargo, una vez generados los workflows, puedes guardarlos localmente y utilizarlos sin conexión.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    ¿Cómo puedo reportar un problema o sugerir una mejora? <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Puedes reportar problemas o sugerir mejoras a través de nuestro repositorio en GitHub. También puedes contactarnos directamente a través del formulario de contacto en nuestra página web. Valoramos mucho tus comentarios y sugerencias para mejorar la extensión.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="cta container">
+        <h2>¡Empieza a potenciar tus workflows de n8n hoy mismo!</h2>
+        <p>Configura tu API key y descubre todo lo que n8n AI Assistant Pro puede hacer por ti.</p>
+        <div>
+            <a href="#" class="btn" id="open-extension">Abrir extensión</a>
+            <a href="https://github.com/tu-usuario/n8n-ai-assistant-pro" class="btn btn-secondary">Ver en GitHub</a>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 n8n AI Assistant Pro. No está afiliado oficialmente con n8n GmbH.</p>
+            <p>Hecho con <i class="fas fa-heart" style="color: #e74c3c;"></i> para la comunidad de n8n</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Toggle para las preguntas frecuentes
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+                
+                // Cambiar icono
+                const icon = question.querySelector('i');
+                if (faqItem.classList.contains('active')) {
+                    icon.className = 'fas fa-chevron-up';
+                } else {
+                    icon.className = 'fas fa-chevron-down';
+                }
+            });
+        });
+        
+        // Abrir la extensión
+        document.getElementById('open-extension').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Intentar abrir el popup de la extensión
+            chrome.runtime.sendMessage({ action: "openPopup" }, function(response) {
+                // Si no podemos comunicarnos con la extensión, redirigir a la página de extensiones
+                if (chrome.runtime.lastError) {
+                    window.close();
+                }
+            });
+        });
+        
+        // Obtener la versión actual de la extensión
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const manifest = chrome.runtime.getManifest();
+                const versionInfo = document.querySelector('.version-info');
+                if (versionInfo && manifest.version) {
+                    versionInfo.textContent = `n8n AI Assistant Pro - Versión ${manifest.version}`;
+                }
+            } catch (e) {
+                console.error('Error al obtener información de versión:', e);
+            }
+            
+            // Abrir el primer elemento FAQ por defecto
+            const firstFaq = document.querySelector('.faq-item');
+            if (firstFaq) {
+                firstFaq.classList.add('active');
+                const icon = firstFaq.querySelector('i');
+                if (icon) {
+                    icon.className = 'fas fa-chevron-up';
+                }
+            }
+        });
+        
+        // Rastrear eventos de análisis
+        function trackEvent(category, action, label) {
+            try {
+                chrome.runtime.sendMessage({
+                    action: "trackEvent",
+                    data: {
+                        category: category,
+                        action: action,
+                        label: label
+                    }
+                });
+            } catch (e) {
+                console.error('Error al rastrear evento:', e);
+            }
+        }
+        
+        // Rastrear clics en botones y links importantes
+        document.querySelectorAll('.btn, .feature-card').forEach(element => {
+            element.addEventListener('click', function() {
+                let category = 'welcome_page';
+                let action = 'click';
+                let label = this.textContent.trim() || (this.id || 'unknown');
+                
+                if (this.classList.contains('feature-card')) {
+                    label = this.querySelector('h3')?.textContent || 'feature_card';
+                }
+                
+                trackEvent(category, action, label);
+            });
+        });
+        
+        // Registrar vistas de secciones importantes cuando se hacen visibles
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.id) {
+                    trackEvent('welcome_page', 'view_section', entry.target.id);
+                    // Dejar de observar después de la primera vez que es visible
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // Observar secciones importantes
+        document.querySelectorAll('section').forEach(section => {
+            if (section.id) {
+                observer.observe(section);
+            } else {
+                const heading = section.querySelector('h2');
+                if (heading) {
+                    section.id = heading.textContent.toLowerCase().replace(/\s+/g, '_');
+                    observer.observe(section);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
