@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>n8n AI Assistant Pro</title>
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>n8n AI Assistant Pro</h1>
+      <div class="tabs">
+        <button class="tab-button active" data-tab="chat">Chat</button>
+        <button class="tab-button" data-tab="generate">Generar</button>
+        <button class="tab-button" data-tab="analyze">Analizar</button>
+        <button class="tab-button" data-tab="docker">Docker/DB</button>
+        <button class="tab-button" data-tab="settings">Config</button>
+      </div>
+    </div>
+    
+    <div id="status-bar">
+      <span id="detection-status">Detectando n8n...</span>
+      <span id="connection-status"></span>
+    </div>
+    
+    <!-- Tab Content: Chat -->
+    <div class="tab-content active" id="chat-tab">
+      <div class="chat-container">
+        <div id="chat-history"></div>
+        <div class="chat-input-container">
+          <textarea id="chat-input" placeholder="Escribe tu mensaje aquí... (Ej: 'Crea un workflow para enviar emails cuando se actualiza una hoja de cálculo')"></textarea>
+          <button id="send-message">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tab Content: Generate Workflow -->
+    <div class="tab-content" id="generate-tab">
+      <h2>Generar Workflow</h2>
+      <textarea id="workflow-description" placeholder="Describe el workflow que quieres crear. Por ejemplo: 'Un workflow que monitoree nuevos registros en una base de datos PostgreSQL y envíe notificaciones por Slack'"></textarea>
+      <div class="options">
+        <div class="option-group">
+          <label>Complejidad:</label>
+          <select id="complexity-level">
+            <option value="simple">Simple (2-3 nodos)</option>
+            <option value="medium" selected>Medio (4-7 nodos)</option>
+            <option value="complex">Complejo (8+ nodos)</option>
+          </select>
+        </div>
+        <div class="option-group">
+          <label>Enfoque:</label>
+          <select id="workflow-focus">
+            <option value="functionality">Funcionalidad</option>
+            <option value="performance">Rendimiento</option>
+            <option value="reliability">Confiabilidad</option>
+          </select>
+        </div>
+      </div>
+      <button id="generate-workflow-btn" class="action-button">
+        <i class="fas fa-magic"></i> Generar Workflow
+      </button>
+    </div>
+    
+    <!-- Tab Content: Analyze Workflow -->
+    <div class="tab-content" id="analyze-tab">
+      <h2>Analizar Workflow</h2>
+      <div class="analyze-options">
+        <button id="analyze-current-btn" class="action-button">
+          <i class="fas fa-magnifying-glass"></i> Analizar Workflow Actual
+        </button>
+        <div class="analyze-type-selector">
+          <label>
+            <input type="checkbox" id="analyze-performance" checked>
+            Rendimiento
+          </label>
+          <label>
+            <input type="checkbox" id="analyze-security" checked>
+            Seguridad
+          </label>
+          <label>
+            <input type="checkbox" id="analyze-structure" checked>
+            Estructura
+          </label>
+          <label>
+            <input type="checkbox" id="analyze-errors" checked>
+            Posibles Errores
+          </label>
+        </div>
+      </div>
+      <div id="analysis-result" class="results-container hidden">
+        <h3>Resultados del Análisis</h3>
+        <div id="analysis-content"></div>
+        <div class="action-buttons">
+          <button id="apply-suggestions-btn">
+            <i class="fas fa-check"></i> Aplicar Sugerencias
+          </button>
+          <button id="copy-analysis-btn">
+            <i class="fas fa-copy"></i> Copiar
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tab Content: Docker/DB Management -->
+    <div class="tab-content" id="docker-tab">
+      <h2>Gestión de Docker y PostgreSQL</h2>
+      <div class="docker-connection">
+        <div class="connection-form">
+          <div class="form-group">
+            <label for="docker-host">Host de Docker:</label>
+            <input type="text" id="docker-host" placeholder="http://localhost:2375" value="http://localhost:2375">
+          </div>
+          <div class="form-group">
+            <label for="postgres-connection">Conexión PostgreSQL:</label>
+            <input type="text" id="postgres-connection" placeholder="postgresql://user:password@localhost:5432/database">
+          </div>
+          <button id="test-connection-btn" class="action-button">
+            <i class="fas fa-plug"></i> Probar Conexión
+          </button>
+        </div>
+      </div>
+      
+      <div class="docker-commands">
+        <h3>Operaciones Rápidas</h3>
+        <div class="quick-commands">
+          <button class="command-btn" data-command="docker-status">
+            <i class="fas fa-info-circle"></i> Estado de Contenedores
+          </button>
+          <button class="command-btn" data-command="restart-n8n">
+            <i class="fas fa-refresh"></i> Reiniciar n8n
+          </button>
+          <button class="command-btn" data-command="db-status">
+            <i class="fas fa-database"></i> Estado de PostgreSQL
+          </button>
+          <button class="command-btn" data-command="logs-n8n">
+            <i class="fas fa-list-ul"></i> Logs de n8n
+          </button>
+        </div>
+        
+        <h3>Comando Personalizado</h3>
+        <div class="custom-command">
+          <textarea id="custom-command" placeholder="Escribe un comando para ejecutar (ej: 'Muestra todas las tablas en la base de datos' o 'Reinicia el contenedor de n8n')"></textarea>
+          <button id="run-command-btn" class="action-button">
+            <i class="fas fa-terminal"></i> Ejecutar
+          </button>
+        </div>
+        
+        <div id="command-output" class="output-container hidden">
+          <h4>Resultado:</h4>
+          <pre id="output-content"></pre>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tab Content: Settings -->
+    <div class="tab-content" id="settings-tab">
+      <h2>Configuración</h2>
+      
+      <div class="section">
+        <h3>Modelos de IA</h3>
+        <div class="model-selector">
+          <div class="form-group">
+            <label for="provider-select">Proveedor:</label>
+            <select id="provider-select">
+              <option value="openai">OpenAI</option>
+              <option value="anthropic">Anthropic (Claude)</option>
+              <option value="openrouter">OpenRouter</option>
+              <option value="custom">API Personalizada</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="model-select">Modelo:</label>
+            <select id="model-select">
+              <!-- OpenAI Models -->
+              <option value="gpt-4o" data-provider="openai">GPT-4o</option>
+              <option value="gpt-4-turbo" data-provider="openai">GPT-4 Turbo</option>
+              <option value="gpt-3.5-turbo" data-provider="openai">GPT-3.5 Turbo</option>
+              
+              <!-- Anthropic Models -->
+              <option value="claude-3-5-sonnet" data-provider="anthropic">Claude 3.5 Sonnet</option>
+              <option value="claude-3-opus" data-provider="anthropic">Claude 3 Opus</option>
+              <option value="claude-3-haiku" data-provider="anthropic">Claude 3 Haiku</option>
+              
+              <!-- OpenRouter Models -->
+              <option value="openai/gpt-4o" data-provider="openrouter">OpenRouter: GPT-4o</option>
+              <option value="anthropic/claude-3-5-sonnet" data-provider="openrouter">OpenRouter: Claude 3.5 Sonnet</option>
+              <option value="mistralai/mistral-large" data-provider="openrouter">OpenRouter: Mistral Large</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="api-key">API Key:</label>
+            <div class="api-key-input">
+              <input type="password" id="api-key" placeholder="Ingresa tu API key">
+              <button id="toggle-api-visibility">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Para APIs personalizadas -->
+          <div class="form-group custom-api-fields hidden">
+            <label for="custom-api-url">URL de API:</label>
+            <input type="text" id="custom-api-url" placeholder="https://api.ejemplo.com/v1">
+          </div>
+          
+          <button id="save-api-settings" class="action-button">
+            <i class="fas fa-save"></i> Guardar Configuración de API
+          </button>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h3>Preferencias</h3>
+        <div class="preferences">
+          <div class="preference-item">
+            <label for="auto-detect">
+              <input type="checkbox" id="auto-detect" checked>
+              Detectar automáticamente workflows n8n
+            </label>
+          </div>
+          <div class="preference-item">
+            <label for="auto-suggest">
+              <input type="checkbox" id="auto-suggest">
+              Sugerir mejoras automáticamente
+            </label>
+          </div>
+          <div class="preference-item">
+            <label for="dark-mode">
+              <input type="checkbox" id="dark-mode">
+              Modo oscuro
+            </label>
+          </div>
+          <div class="preference-item">
+            <label for="chat-history">
+              <input type="checkbox" id="chat-history" checked>
+              Guardar historial de chat
+            </label>
+          </div>
+        </div>
+        <button id="save-preferences" class="action-button">
+          <i class="fas fa-save"></i> Guardar Preferencias
+        </button>
+      </div>
+      
+      <div class="section">
+        <h3>Datos y Privacidad</h3>
+        <div class="data-privacy">
+          <button id="clear-history" class="action-button warning">
+            <i class="fas fa-trash"></i> Borrar Historial
+          </button>
+          <button id="export-data" class="action-button">
+            <i class="fas fa-file-export"></i> Exportar Datos
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="loading-overlay" class="hidden">
+      <div class="spinner"></div>
+      <p id="loading-message">Procesando solicitud...</p>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
