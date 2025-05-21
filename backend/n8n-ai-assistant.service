@@ -1,0 +1,15 @@
+[Unit]
+Description=n8n AI Assistant Pro Backend Service
+After=network.target docker.service
+
+[Service]
+User=your_username
+WorkingDirectory=/path/to/n8n-ai-assistant-pro/backend
+ExecStart=/usr/bin/python app.py
+ExecStop=/usr/bin/python terminate_app.py
+Restart=on-failure
+Environment=FLASK_APP=app.py
+Environment=FLASK_DEBUG=0
+
+[Install]
+WantedBy=multi-user.target
